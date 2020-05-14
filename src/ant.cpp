@@ -57,7 +57,7 @@ void CAnt::Init()
     }
 
     //==设置路径为空===============================================
-    for (int i=0;i<=N_MAX_PATH;i++)
+    for (int i=0;i<N_MAX_PATH;i++)
     {
         m_nPath[N_MAX_PATH]=0;
     }
