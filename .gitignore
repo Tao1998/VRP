@@ -1,0 +1,8 @@
+#过滤文件
+
+*.user*
+
+#过滤文件夹debug,release,
+*builld*/
+*debug/
+*release/
