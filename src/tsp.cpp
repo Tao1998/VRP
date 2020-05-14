@@ -1,7 +1,10 @@
-#include ".\tsp.h"
+﻿#include ".\tsp.h"
 #include<math.h>
 #include<string.h>
 #include<QDebug>
+#include<cstdlib>
+#include<ctime>
+
 CTSP::CTSP(void)
 {
     m_pdbTempAry=Create2DArray<double>(N_MAX_CITY_COUNT+1,N_MAX_CITY_COUNT+1);
@@ -12,6 +15,73 @@ CTSP::~CTSP(void)
     Free2DArray(m_pdbTempAry,N_MAX_CITY_COUNT+1);
 }
 
+//设置配送点坐标为随机值
+void CTSP::SetParameterRandom()
+{
+    //先把城市数量和车辆数量设置为默认
+
+    CAR_COUNT=5; //设置车辆数
+    situation=0;
+
+    //蚁群算法参数
+    ALPHA=1.0; //
+    BETA=2.0; //
+    //ANT_COUNT=CITY_COUNT*3/5; //蚂蚁数量
+    if (ANT_COUNT == 0)
+    {
+        ANT_COUNT=1;
+    }
+
+    //IT_COUNT=1000; //迭代次数
+
+    ROU_MAX=0.95;  //信息素传递参数， (1-ROU)就是信息素的挥发速度
+    ROU_MIN=0.2;  //信息素传递参数的最小值，防止衰减到0
+    ROU_REDU=0.95; //信息素传递参数的衰减速度
+
+
+    //设置城市和车辆信息
+    for (int i=0;i<CAR_COUNT;i++)
+    {
+        g_CarAry[i].dbMaxLength=50.0;
+        g_CarAry[i].dbMaxWeight=8.0;
+        g_CarAry[i].dbSpeed=1.0;
+    }
+
+    srand((int)time(0));
+
+    g_CityAry[0].dbX=(rand()%100)/5;g_CityAry[0].dbY=(rand()%100)/5;g_CityAry[0].dbW=(rand()%10)/5; //配送点
+
+    for(int i=1;i<=CITY_COUNT;i++)
+    {
+        g_CityAry[i].dbX=(rand()%100)/5;
+        g_CityAry[i].dbY=(rand()%100)/5;
+        g_CityAry[i].dbW=(rand()%10)/5;
+    }
+
+    // min—max标准化 美化GUI 让点落在中心区域
+    int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        if(g_CityAry[i].dbX<dbx_min)
+            dbx_min = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbX>dbx_max)
+            dbx_max = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbY<dby_min)
+            dby_min = g_CityAry[i].dbY;
+        if(g_CityAry[i].dbY>dby_max)
+            dby_max = g_CityAry[i].dbY;
+    }
+    int dbx_d = dbx_max-dbx_min, dby_d = dby_max-dby_min;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        g_CityAry[i].dbX_draw = (g_CityAry[i].dbX-dbx_min) / dbx_d * 100;
+        g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
+    }
+
+    //计算两两城市间距离
+    CalCityDistance();
+
+}
 
 //恢复算法参数为默认值
 void CTSP::SetParameterDefault()
@@ -398,7 +468,7 @@ double CTSP::Search()
 
     int nFlag=0; //用全局还是迭代最优解更新环境信息素
 
-    qDebug()<<"开始迭代循环";
+    //qDebug()<<"开始迭代循环";
     for (int i=0;i<IT_COUNT;i++) //在迭代次数内进行循环
     {
 

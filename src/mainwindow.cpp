@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"ant.h"
 #include"common.h"
@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ctst=new CTSP();
     ctst->SetParameterDefault();
     ctst->Init();
+
 
     ui->setupUi(this);
     this->init();
@@ -124,15 +125,24 @@ void MainWindow::SetTableStyle()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 }
 
-void MainWindow::on_pushButton_Search_clicked()
+void MainWindow::on_pushButton_NewData_clicked()
 {
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
-//    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
     IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
+    CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
+    ctst->SetParameterRandom();
+    ctst->Init();
+}
+
+void MainWindow::on_pushButton_Search_clicked()
+{
+    //ANT_COUNT=ui->spinBox_antNum->text().toInt();
+//    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
+    //IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
 //    qDebug()<<"IT_COUNT: "<<ui->spinBox_maxGeneration->text().toInt();
 
-    qDebug()<<"点击搜索按钮";
-    ctst->SetParameterDefault();
+    //qDebug()<<"点击搜索按钮";
+    //ctst->SetParameterDefault();
     ctst->Init();
     //ctst->Search();
     ui->label_minDist->setText(QString::number(ctst->Search(),'f', 4));

@@ -1,4 +1,4 @@
-#ifndef TSP_H
+﻿#ifndef TSP_H
 #define TSP_H
 #pragma once
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +77,8 @@ public:
 
     void CalCityDistance(); //计算两两城市间距离
     void SetParameterDefault(); //恢复算法参数为默认值
+
+    void SetParameterRandom();//设置配送点坐标为随机值
 
     //void LoadDataFromIniFile(CString strIniFile); //从文本文件载入数据
 
