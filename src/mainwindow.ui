@@ -338,8 +338,14 @@ background:none;
             <property name="maximum">
              <number>500</number>
             </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
             <property name="value">
              <number>20</number>
+            </property>
+            <property name="displayIntegerBase">
+             <number>10</number>
             </property>
            </widget>
           </item>
@@ -712,7 +718,7 @@ background:none;
      <x>0</x>
      <y>0</y>
      <width>957</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

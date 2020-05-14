@@ -44,7 +44,7 @@ struct ANT_VEHICLE
 
 };
 
-const int N_MAX_CITY_COUNT=200; //最大城市数量 ( 不包含配送站 )
+const int N_MAX_CITY_COUNT=500; //最大城市数量 ( 不包含配送站 )
 const int N_MAX_ANT_COUNT=100; //最大蚂蚁数量
 const int N_MAX_CAR_COUNT=100;  //最大车辆数量
 

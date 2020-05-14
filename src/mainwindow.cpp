@@ -47,11 +47,15 @@ void MainWindow::DrawTab()
     painter.drawRect(0,0,rect_width,rect_width);
     int route_idx=-1;
     if(situation == 0){
+        qDebug()<<"draw situation 0 !";
+        // 分开文字和图形，避免文字被遮挡
+//        painter.setPen(QPen(QColor (206, 206, 206),4));//outline color
+        painter.setBrush(QColor (206, 206, 206));
         for (int i=0;i<CITY_COUNT+1;i++) {
-            painter.setPen(QPen(QColor (206, 206, 206),4));//设置画笔形式
-            painter.setBrush(QColor (206, 206, 206));
             painter.drawEllipse(g_CityAry[i].dbX_draw*5+100,rect_width-g_CityAry[i].dbY_draw*5-100,30,30);
-            painter.setPen(QPen(QColor (20, 20, 20),4));//设置画笔形式
+        }
+        painter.setPen(QPen(QColor (20, 20, 20),4));//设置画笔形式
+        for (int i=0;i<CITY_COUNT+1;i++) {
             painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));
         }
     }
@@ -127,27 +131,23 @@ void MainWindow::SetTableStyle()
 
 void MainWindow::on_pushButton_NewData_clicked()
 {
-    ANT_COUNT=ui->spinBox_antNum->text().toInt();
-    IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
     CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
     ctst->SetParameterRandom();
-    ctst->Init();
+    ui->tab_3->repaint(); // 重新描点
 }
 
 void MainWindow::on_pushButton_Search_clicked()
 {
-    //ANT_COUNT=ui->spinBox_antNum->text().toInt();
+    ANT_COUNT=ui->spinBox_antNum->text().toInt();
 //    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
-    //IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
+    IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
 //    qDebug()<<"IT_COUNT: "<<ui->spinBox_maxGeneration->text().toInt();
 
     //qDebug()<<"点击搜索按钮";
-    //ctst->SetParameterDefault();
     ctst->Init();
-    //ctst->Search();
     ui->label_minDist->setText(QString::number(ctst->Search(),'f', 4));
     situation=1;
     QEvent *event1=new QEvent(QEvent::WindowActivate);//发送WindowActivate事件来刷新绘图
-    QApplication::postEvent(this, event1 );
+    QApplication::postEvent(this, event1);
 }
 

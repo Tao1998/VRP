@@ -53,9 +53,10 @@ void CTSP::SetParameterRandom()
 
     for(int i=1;i<=CITY_COUNT;i++)
     {
-        g_CityAry[i].dbX=(rand()%100)/5;
-        g_CityAry[i].dbY=(rand()%100)/5;
-        g_CityAry[i].dbW=(rand()%10)/5;
+        g_CityAry[i].dbX=(rnd(0.0,100.0))/5;
+        g_CityAry[i].dbY=(rnd(0.0,100.0))/5;
+        g_CityAry[i].dbW=(rnd(0.0,10.0))/5;
+        qDebug()<<"X:"<<g_CityAry[i].dbX<<"  Y:"<<g_CityAry[i].dbY;
     }
 
     // min—max标准化 美化GUI 让点落在中心区域
@@ -590,7 +591,7 @@ double CTSP::Search()
     for (int p=0;p<m_nBestPathCount;p++) {
         qDebug()<<m_nBestPath[p];//打印最佳路径
     }
-    double temp=1000;
+    double temp=DB_MAX;
     for (int w=0;w<IT_COUNT;w++) {
         if(temp>g_dbPathLenAry[w])
             temp=g_dbPathLenAry[w];
