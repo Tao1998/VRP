@@ -1,4 +1,4 @@
-#ifndef COMMON_H
+﻿#ifndef COMMON_H
 #define COMMON_H
 #pragma once
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,12 @@ const double Q_POWER=1.0;  //选择策略的变化趋势
 
 //==========================================================================
 extern int CAR_COUNT;  //车辆数量
+extern int CARA_COUNT;  //车辆A数量
+extern int CARB_COUNT;  //车辆B数量
+extern int MAXA_WEIGHT; //车辆A的最大载重
+extern int MAXB_WEIGHT; //车辆B的最大载重
 extern int CITY_COUNT;  //城市数量( 注意不包括配送站!!! )
+extern int MAX_LENGTH;  //最大运输距离
 
 //蚁群算法参数
 extern double ALPHA; //

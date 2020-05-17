@@ -20,7 +20,7 @@ void CTSP::SetParameterRandom()
 {
     //先把城市数量和车辆数量设置为默认
 
-    CAR_COUNT=5; //设置车辆数
+    //CAR_COUNT=5; //设置车辆数
     situation=0;
 
     //蚁群算法参数
@@ -40,10 +40,24 @@ void CTSP::SetParameterRandom()
 
 
     //设置城市和车辆信息
+    /*
     for (int i=0;i<CAR_COUNT;i++)
     {
         g_CarAry[i].dbMaxLength=50.0;
         g_CarAry[i].dbMaxWeight=8.0;
+        g_CarAry[i].dbSpeed=1.0;
+    }
+    */
+    for(int i=0;i<CARA_COUNT;i++)
+    {
+        g_CarAry[i].dbMaxLength=MAX_LENGTH;
+        g_CarAry[i].dbMaxWeight=MAXA_WEIGHT;
+        g_CarAry[i].dbSpeed=1.0;
+    }
+    for(int i=CARA_COUNT;i<CAR_COUNT;i++)
+    {
+        g_CarAry[i].dbMaxLength=MAX_LENGTH;
+        g_CarAry[i].dbMaxWeight=MAXB_WEIGHT;
         g_CarAry[i].dbSpeed=1.0;
     }
 
