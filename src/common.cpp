@@ -1,10 +1,15 @@
-#include "common.h"
+﻿#include "common.h"
 #include<math.h>
 #include<string.h>
 #include<stdlib.h>
 
 int CAR_COUNT=5;  //车辆数量
+int CARA_COUNT=0;  //车辆A数量
+int CARB_COUNT=0;  //车辆B数量
+int MAXA_WEIGHT=0; //车辆A的最大载重
+int MAXB_WEIGHT=0; //车辆B的最大载重
 int CITY_COUNT=20; //城市数量 ( 不包含配送站 )
+int MAX_LENGTH=0;  //最大距离
 
 //蚁群算法参数
 double ALPHA=1.0; //

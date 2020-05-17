@@ -21,6 +21,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event);
     void DrawTab();
     void SetTableStyle();
+    void MultiCarInit();
     ~MainWindow();
 
 private slots:

@@ -1,5 +1,5 @@
-﻿#include "mainwindow.h"
-#include "ui_mainwindow.h"
+﻿#include"mainwindow.h"
+#include"ui_mainwindow.h"
 #include"ant.h"
 #include"common.h"
 #include"tsp.h"
@@ -9,11 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ctst=new CTSP();
     ctst->SetParameterDefault();
     ctst->Init();
-
 
     ui->setupUi(this);
     this->init();
@@ -129,8 +127,19 @@ void MainWindow::SetTableStyle()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 }
 
+void MainWindow::MultiCarInit()
+{
+    CARA_COUNT=ui->spinBox_NumberOfA->text().toInt();
+    CARB_COUNT=ui->spinBox_NumberOfB->text().toInt();
+    CAR_COUNT=CARA_COUNT+CARB_COUNT;
+    MAX_LENGTH=ui->spinBox_maxDist->text().toDouble();
+    MAXA_WEIGHT=ui->spinBox_maxAWeight->text().toDouble();
+    MAXB_WEIGHT=ui->spinBox_maxBWeight->text().toDouble();
+}
+
 void MainWindow::on_pushButton_NewData_clicked()
 {
+    MultiCarInit();
     CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
     ctst->SetParameterRandom();
     ui->tab_3->repaint(); // 重新描点
