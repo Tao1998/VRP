@@ -30,6 +30,10 @@ private slots:
 
     void on_pushButton_NewData_clicked();
 
+    void on_pushButton_AddTableData_clicked();
+
+    void on_pushButton_DeleteTableData_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

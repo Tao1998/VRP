@@ -140,16 +140,21 @@ void MainWindow::SetTableStyle()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+
+    ui->tableWidget_2->horizontalHeader()->setVisible(true);
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); //把给定列设置为给定模式
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 }
 
 void MainWindow::MultiCarInit()
 {
-    CARA_COUNT=ui->spinBox_NumberOfA->text().toInt();
-    CARB_COUNT=ui->spinBox_NumberOfB->text().toInt();
-    CAR_COUNT=CARA_COUNT+CARB_COUNT;
-    MAX_LENGTH=ui->spinBox_maxDist->text().toDouble();
-    MAXA_WEIGHT=ui->spinBox_maxAWeight->text().toDouble();
-    MAXB_WEIGHT=ui->spinBox_maxBWeight->text().toDouble();
+//    CARA_COUNT=ui->spinBox_NumberOfA->text().toInt();
+//    CARB_COUNT=ui->spinBox_NumberOfB->text().toInt();
+//    CAR_COUNT=CARA_COUNT+CARB_COUNT;
+//    MAX_LENGTH=ui->spinBox_maxDist->text().toDouble();
+//    MAXA_WEIGHT=ui->spinBox_maxAWeight->text().toDouble();
+//    MAXB_WEIGHT=ui->spinBox_maxBWeight->text().toDouble();
 }
 
 void MainWindow::on_pushButton_NewData_clicked()
@@ -175,3 +180,19 @@ void MainWindow::on_pushButton_Search_clicked()
     QApplication::postEvent(this, event1);
 }
 
+
+void MainWindow::on_pushButton_AddTableData_clicked()
+{
+    int row_count = ui->tableWidget_2->rowCount();
+    qDebug()<<"row_count: "<< row_count;
+    ui->tableWidget_2->setRowCount(row_count+1);
+
+}
+
+void MainWindow::on_pushButton_DeleteTableData_clicked()
+{
+    int row_index = ui->tableWidget_2->currentRow();//选中的行号
+    if(row_index != -1){
+        ui->tableWidget_2->removeRow(row_index);
+    }
+}
