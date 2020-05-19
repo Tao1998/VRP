@@ -1,4 +1,4 @@
-#include ".\ant.h"
+﻿#include ".\ant.h"
 #include<string.h>
 #include<QDebug>
 CAnt::CAnt(void)
@@ -244,7 +244,7 @@ int CAnt::ChooseNextCity()
     }
     if(op1==0&&op2==0&&op3==0){
         if(nCarNo==0){
-            qDebug()<<"蚂蚁找到了";
+            //qDebug()<<"蚂蚁找到了";
             qDebug()<<m_CarAry[nCarNo].dbMovedLength+g_distance[m_nCurCity][nSelectedCity]+g_distance[nSelectedCity][0];
             qDebug()<<g_CarAry[nCarNo].dbMaxLength<<" "<<nCarNo;
         }

@@ -289,7 +289,7 @@ background:none;
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="font">
@@ -790,7 +790,7 @@ background:none;
      <x>0</x>
      <y>0</y>
      <width>957</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>
