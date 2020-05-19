@@ -74,6 +74,7 @@ public:
 public:
 
     int GetCarNo(int nNode); //根据路径中的点编号得到这是第几辆车
+    QString GetCarType(int nNode); //根据路径中的点编号得到车辆类型
 
     void CalCityDistance(); //计算两两城市间距离
     void SetParameterDefault(); //恢复算法参数为默认值

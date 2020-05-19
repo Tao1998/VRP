@@ -41,7 +41,7 @@ void MainWindow::DrawTab()
     QPainter painter(ui->tab_3);
     painter.setPen(QPen(QColor (206, 206, 206),1));
 
-    int rect_width = 700;
+    int rect_width = 700; // 绘图窗口大小
     painter.drawRect(0,0,rect_width,rect_width);
     int route_idx=-1;
     if(situation == 0){
@@ -66,7 +66,8 @@ void MainWindow::DrawTab()
         qDebug()<< "X:"<<g_CityAry[0].dbX_draw<< " Y:"<<rect_width-g_CityAry[0].dbY_draw;
         QString strRoute = "0-";
         ui->tableWidget->setRowCount(best_ant_count-CITY_COUNT);
-        int m,n=0;
+        int m,n=0,car_No;
+        double weight=0.0;
         for (int j=1;j<best_ant_count;j++)
         {
             m=best_ant[j-1];
@@ -74,8 +75,8 @@ void MainWindow::DrawTab()
             if (m>CITY_COUNT) //是配送站
             {
                 route_idx++;
-                m=0;
-
+                car_No = ctst->GetCarNo(m);
+                weight=0.0;
                 strRoute = "0-";
                 // 设置单元格样式
                 QTableWidgetItem *item = new QTableWidgetItem(QString::number(route_idx));
@@ -83,8 +84,14 @@ void MainWindow::DrawTab()
                 item->setTextColor(QColor(20, 20, 20)); //设置文字颜色
                 item->setTextAlignment(Qt::AlignCenter); // 设置居中
                 ui->tableWidget->setItem(route_idx,0,item);//填入表格
+                QTableWidgetItem *item_car_type = new QTableWidgetItem(ctst->GetCarType(m));
+                item_car_type->setTextAlignment(Qt::AlignCenter); // 设置居中
+                ui->tableWidget->setItem(route_idx,1,item_car_type);
+
+                m=0;
             }
             else{ // 绘制配送点
+                weight=weight+g_CityAry[m].dbW;
 //                painter.setPen(QPen(Qt::white));//outline color
                 painter.setBrush(intColor(route_idx, best_ant_count-CITY_COUNT));
                 painter.drawEllipse(g_CityAry[m].dbX_draw*5+100,rect_width-g_CityAry[m].dbY_draw*5-100,30,30); 
@@ -93,9 +100,13 @@ void MainWindow::DrawTab()
             if (n>CITY_COUNT) //是配送站
             {
                 n=0;
-
+                QTableWidgetItem *item_w = new QTableWidgetItem(QString::number(weight/g_CarAry[car_No-1].dbMaxWeight,'g',2));// 满载率
+                item_w->setTextAlignment(Qt::AlignCenter); // 设置居中
+                ui->tableWidget->setItem(route_idx,2,item_w);
+                weight=0.0;
                 strRoute += "0";
                 ui->tableWidget->setItem(route_idx,3,new QTableWidgetItem(strRoute));//填入表格
+
             }
             // best_ant_count-CITY_COUNT 路线数量
             painter.setPen(QPen(intColor(route_idx, best_ant_count-CITY_COUNT),3));//设置画笔形式
@@ -109,6 +120,10 @@ void MainWindow::DrawTab()
 
         strRoute += QString::number(n)+"-0";
         ui->tableWidget->setItem(route_idx,3,new QTableWidgetItem(strRoute));//填入表格
+        QTableWidgetItem *item_w = new QTableWidgetItem(QString::number(weight/g_CarAry[car_No-1].dbMaxWeight,'g',2)); // 满载率
+        item_w->setTextAlignment(Qt::AlignCenter); // 设置居中
+        ui->tableWidget->setItem(route_idx,2,item_w);
+
         for (int i=0;i<CITY_COUNT+1;i++) {
             painter.setPen(QPen(QColor (10, 10, 10)));//设置画笔形式
             painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));

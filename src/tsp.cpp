@@ -61,9 +61,7 @@ void CTSP::SetParameterRandom()
         g_CarAry[i].dbSpeed=1.0;
     }
 
-    srand((int)time(0));
-
-    g_CityAry[0].dbX=(rand()%100)/5;g_CityAry[0].dbY=(rand()%100)/5;g_CityAry[0].dbW=(rand()%10)/5; //配送点
+    g_CityAry[0].dbX=(rnd(0.0,100.0))/5;g_CityAry[0].dbY=(rnd(0.0,100.0))/5;g_CityAry[0].dbW=0.0; //配送站
 
     for(int i=1;i<=CITY_COUNT;i++)
     {
@@ -487,7 +485,7 @@ double CTSP::Search()
     for (int i=0;i<IT_COUNT;i++) //在迭代次数内进行循环
     {
 
-        qDebug()<<"11111111111";
+
         //计算选择策略的值Q
         dbTemp=abs((double)i-dbMid);
         dbRate=pow(dbTemp,Q_POWER)/pow(dbMid,Q_POWER);
@@ -506,7 +504,6 @@ double CTSP::Search()
             m_cAntAry[j].Search();
         }
 
-        qDebug()<<"232222";
         //是否有更优解产生，有则保存
         for (int j=0;j<ANT_COUNT;j++)
         {
@@ -617,12 +614,23 @@ double CTSP::Search()
 
 
 //根据路径中的点编号得到这是第几辆车
-//返回 [ 1, CAR_NUM ]
+//返回 [ 1, CAR_COUNT ]
 int CTSP::GetCarNo(int nNode)
 {
-    int nSendCount=(nNode-CITY_COUNT)/CAR_COUNT;
+    int nSendCount=(nNode-CITY_COUNT-1)/CAR_COUNT;
 
-    return nNode-CITY_COUNT-nSendCount*CAR_COUNT+1;
+    return nNode-CITY_COUNT-nSendCount*CAR_COUNT;
+}
+
+QString CTSP::GetCarType(int nNode)
+{
+    int car_No = GetCarNo(nNode) - 1; // [1 CAR_COUNT]
+    if(car_No<CARA_COUNT){
+        return "A";
+    }
+    else{
+        return "B";
+    }
 }
 
 //保存全局最优蚂蚁和迭代最优蚂蚁
