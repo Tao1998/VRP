@@ -1,4 +1,4 @@
-#include ".\tsp.h"
+﻿#include ".\tsp.h"
 #include<math.h>
 #include<string.h>
 #include<QDebug>
@@ -40,13 +40,13 @@ void CTSP::SetParameterDefault()
 
 
     //设置城市和车辆信息
-    for (int i=0;i<2;i++)
+    for (int i=0;i<3;i++)
     {
         g_CarAry[i].dbMaxLength=20.0;
         g_CarAry[i].dbMaxWeight=2.0;
         g_CarAry[i].dbSpeed=1.0;
     }
-    for (int i=2;i<CAR_COUNT;i++)
+    for (int i=3;i<CAR_COUNT;i++)
     {
         g_CarAry[i].dbMaxLength=50.0;
         g_CarAry[i].dbMaxWeight=8.0;
@@ -547,6 +547,7 @@ double CTSP::Search()
             nextCity=m_nBestPath[p+1];
             temp_length=0;
             temp_weight=0;
+            
             //temp_length=g_distance[preCity][nextCity];
             //m=m+" "+QString::number(temp_length,'f', 4);
             m=m+"["+QString::number(GetCarNo(m_nBestPath[p]), 10)+"]"+" ";

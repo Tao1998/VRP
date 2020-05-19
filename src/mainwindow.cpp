@@ -5,6 +5,7 @@
 #include"tsp.h"
 #include<QPainter>
 #include<QDebug>
+#include<QMessageBox>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -149,8 +150,8 @@ void MainWindow::SetTableStyle()
 
 void MainWindow::MultiCarInit()
 {
-    int type_count = ui->tableWidget_2->rowCount();
-    for(int i=0;i<type_count;i++)
+    TYPE_COUNT = ui->tableWidget_2->rowCount();
+    for(int i=0;i<TYPE_COUNT;i++)
     {
         CAR_TYPE_NAME[i] = ui->tableWidget_2->item(i,0)->text();
         CAR_TYPE_MAX_LENGTH[i] = ui->tableWidget_2->item(i,1)->text().toDouble();
@@ -169,6 +170,21 @@ void MainWindow::on_pushButton_NewData_clicked()
 void MainWindow::on_pushButton_Search_clicked()
 {
     MultiCarInit();
+    if(CAR_COUNT==0)
+    {
+        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆数目应大于0"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return;
+    }
+    if(MAX_CITYLENGTH>MAX_LENGTH)
+    {
+        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆无法到达最远城市"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return;
+    }
+    if(MAX_CITYWEIGHT>MAX_WEIGHT)
+    {
+        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆无法到达载重要求"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return;
+    }
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
 //    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
     IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
