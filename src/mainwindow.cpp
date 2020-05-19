@@ -149,17 +149,18 @@ void MainWindow::SetTableStyle()
 
 void MainWindow::MultiCarInit()
 {
-//    CARA_COUNT=ui->spinBox_NumberOfA->text().toInt();
-//    CARB_COUNT=ui->spinBox_NumberOfB->text().toInt();
-//    CAR_COUNT=CARA_COUNT+CARB_COUNT;
-//    MAX_LENGTH=ui->spinBox_maxDist->text().toDouble();
-//    MAXA_WEIGHT=ui->spinBox_maxAWeight->text().toDouble();
-//    MAXB_WEIGHT=ui->spinBox_maxBWeight->text().toDouble();
+    int type_count = ui->tableWidget_2->rowCount();
+    for(int i=0;i<type_count;i++)
+    {
+        CAR_TYPE_NAME[i] = ui->tableWidget_2->item(i,0)->text();
+        CAR_TYPE_MAX_LENGTH[i] = ui->tableWidget_2->item(i,1)->text().toDouble();
+        CAR_TYPE_MAX_WEIGHT[i] = ui->tableWidget_2->item(i,2)->text().toDouble();
+        CAR_TYPE_COUNT[i] = ui->tableWidget_2->item(i,3)->text().toInt();
+    }
 }
 
 void MainWindow::on_pushButton_NewData_clicked()
 {
-    MultiCarInit();
     CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
     ctst->SetParameterRandom();
     ui->tab_3->repaint(); // 重新描点
@@ -167,6 +168,7 @@ void MainWindow::on_pushButton_NewData_clicked()
 
 void MainWindow::on_pushButton_Search_clicked()
 {
+    MultiCarInit();
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
 //    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
     IT_COUNT=ui->spinBox_maxGeneration->text().toInt();

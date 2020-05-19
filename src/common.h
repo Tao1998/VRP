@@ -7,6 +7,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include<QColor>
+#include<QString>
 //城市结构体
 struct CITY
 {
@@ -47,6 +48,7 @@ struct ANT_VEHICLE
 const int N_MAX_CITY_COUNT=500; //最大城市数量 ( 不包含配送站 )
 const int N_MAX_ANT_COUNT=100; //最大蚂蚁数量
 const int N_MAX_CAR_COUNT=100;  //最大车辆数量
+const int N_MAX_CAR_TYPE=100;  //最大车型种类
 
 const int N_MAX_IT_COUNT=10000; //最大迭代次数
 
@@ -68,12 +70,12 @@ const double Q_POWER=1.0;  //选择策略的变化趋势
 
 //==========================================================================
 extern int CAR_COUNT;  //车辆数量
-extern int CARA_COUNT;  //车辆A数量
-extern int CARB_COUNT;  //车辆B数量
-extern int MAXA_WEIGHT; //车辆A的最大载重
-extern int MAXB_WEIGHT; //车辆B的最大载重
+extern int TYPE_COUNT;
+extern QString CAR_TYPE_NAME[N_MAX_CAR_TYPE];  //不同车型名称
+extern double CAR_TYPE_MAX_LENGTH[N_MAX_CAR_TYPE];  //不同车型最大里程
+extern double CAR_TYPE_MAX_WEIGHT[N_MAX_CAR_TYPE];  //不同车型载重
+extern int CAR_TYPE_COUNT[N_MAX_CAR_TYPE];  //不同车型数量
 extern int CITY_COUNT;  //城市数量( 注意不包括配送站!!! )
-extern int MAX_LENGTH;  //最大运输距离
 
 //蚁群算法参数
 extern double ALPHA; //

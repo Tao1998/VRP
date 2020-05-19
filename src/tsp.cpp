@@ -48,18 +48,18 @@ void CTSP::SetParameterRandom()
         g_CarAry[i].dbSpeed=1.0;
     }
     */
-    for(int i=0;i<CARA_COUNT;i++)
+    int idx = 0;
+    for(int i=0;i<TYPE_COUNT;i++)
     {
-        g_CarAry[i].dbMaxLength=MAX_LENGTH;
-        g_CarAry[i].dbMaxWeight=MAXA_WEIGHT;
-        g_CarAry[i].dbSpeed=1.0;
+        for(int j=0;j<CAR_TYPE_COUNT[i];j++)
+        {
+            g_CarAry[idx].dbMaxLength=CAR_TYPE_MAX_LENGTH[j];
+            g_CarAry[idx].dbMaxWeight=CAR_TYPE_MAX_WEIGHT[j];
+            g_CarAry[idx].dbSpeed=1.0;
+            idx++;
+        }
     }
-    for(int i=CARA_COUNT;i<CAR_COUNT;i++)
-    {
-        g_CarAry[i].dbMaxLength=MAX_LENGTH;
-        g_CarAry[i].dbMaxWeight=MAXB_WEIGHT;
-        g_CarAry[i].dbSpeed=1.0;
-    }
+
 
     g_CityAry[0].dbX=(rnd(0.0,100.0))/5;g_CityAry[0].dbY=(rnd(0.0,100.0))/5;g_CityAry[0].dbW=0.0; //配送站
 
@@ -599,9 +599,18 @@ double CTSP::Search()
     for (int p=0;p<m_nBestPathCount;p++) {
         best_ant[p]=m_nBestPath[p];//打印最佳路径
     }
+    QString Path = "";
     for (int p=0;p<m_nBestPathCount;p++) {
-        qDebug()<<m_nBestPath[p];//打印最佳路径
+        if(m_nBestPath[p]>CITY_COUNT)
+        {
+            Path += "["+QString::number(m_nBestPath[p])+"] ";//打印最佳路径
+        }
+        else{
+            Path += QString::number(m_nBestPath[p])+" ";//打印最佳路径
+        }
+
     }
+    qDebug()<<Path;
     double temp=DB_MAX;
     for (int w=0;w<IT_COUNT;w++) {
         if(temp>g_dbPathLenAry[w])
@@ -625,12 +634,17 @@ int CTSP::GetCarNo(int nNode)
 QString CTSP::GetCarType(int nNode)
 {
     int car_No = GetCarNo(nNode) - 1; // [1 CAR_COUNT]
-    if(car_No<CARA_COUNT){
-        return "A";
+    int i=0;
+    while(i<TYPE_COUNT){
+        if(car_No<CAR_TYPE_COUNT[i]){
+            return CAR_TYPE_NAME[i];
+        }
+        else{
+            car_No -= CAR_TYPE_COUNT[i];
+            i++;
+        }
     }
-    else{
-        return "B";
-    }
+    return "error";
 }
 
 //保存全局最优蚂蚁和迭代最优蚂蚁

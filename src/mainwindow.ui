@@ -583,7 +583,10 @@ background:none;
               <bool>false</bool>
              </attribute>
              <attribute name="horizontalHeaderDefaultSectionSize">
-              <number>60</number>
+              <number>44</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>24</number>
              </attribute>
              <attribute name="verticalHeaderVisible">
               <bool>false</bool>
@@ -608,7 +611,7 @@ background:none;
              </column>
              <column>
               <property name="text">
-               <string>最大里程</string>
+               <string>里程</string>
               </property>
               <property name="textAlignment">
                <set>AlignCenter</set>
@@ -617,6 +620,14 @@ background:none;
              <column>
               <property name="text">
                <string>载重</string>
+              </property>
+              <property name="textAlignment">
+               <set>AlignCenter</set>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>数量</string>
               </property>
               <property name="textAlignment">
                <set>AlignCenter</set>
@@ -637,6 +648,11 @@ background:none;
                <string>5</string>
               </property>
              </item>
+             <item row="0" column="3">
+              <property name="text">
+               <string>10</string>
+              </property>
+             </item>
              <item row="1" column="0">
               <property name="text">
                <string>B</string>
@@ -650,6 +666,11 @@ background:none;
              <item row="1" column="2">
               <property name="text">
                <string>8</string>
+              </property>
+             </item>
+             <item row="1" column="3">
+              <property name="text">
+               <string>10</string>
               </property>
              </item>
             </widget>
