@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>940</width>
+    <height>754</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/img/images/map.png</normaloff>:/img/images/map.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*{font: 9pt &quot;华文细黑&quot;;
+background: rgb(51, 51, 51);
+	color: rgb(247, 252, 246);}
+QRadioButton{
+	background: outset;
+    height: 25px;
+	font-size:16px;
+}
+
+QRadioButton::indicator::unchecked {
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(92, 92, 92, 255), stop:0.567164 rgba(87, 87, 87, 255), stop:0.791045 rgba(70, 70, 70, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+
+QRadioButton::indicator::unchecked:hover {
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(74, 74, 74, 255), stop:0.567164 rgba(77, 77, 77, 255), stop:0.791045 rgba(54, 54, 54, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+
+QRadioButton::indicator:unchecked:pressed {
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(68, 68, 68, 255), stop:0.567164 rgba(68, 68, 68, 255), stop:0.791045 rgba(43, 43, 43, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+
+QRadioButton::indicator::checked {
+    background:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 254, 254, 255), stop:0.288557 rgba(255, 254, 254, 255), stop:0.378109 rgba(61, 97, 216, 255), stop:0.820896 rgba(60, 100, 223, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+
+QRadioButton::indicator:checked:hover {
+    background:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(235, 234, 234, 255), stop:0.288557 rgba(228, 227, 227, 255), stop:0.378109 rgba(51, 81, 181, 255), stop:0.820896 rgba(55, 91, 204, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+
+QRadioButton::indicator:checked:pressed {
+    background:qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(206, 205, 205, 255), stop:0.298507 rgba(231, 230, 230, 255), stop:0.378109 rgba(61, 65, 178, 255), stop:0.820896 rgba(42, 71, 161, 255), stop:0.870647 rgba(0, 0, 0, 0))
+}
+QTabWidget::pane {
+    border: none;
+    /*border-top: 3px solid qlineargradient(spread:pad, y1:0, y2:1, stop:0 rgba(106, 106, 106),stop:1 rgba(99, 99, 99));*/
+}
+QTabWidget::tab-bar {
+	alignment: center;
+    border: none;
+}
+QTabBar::tab {
+    border: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: qlineargradient(spread:pad, y1:0, y2:1, stop:0 rgba(106, 106, 106),stop:1 rgba(99, 99, 99));
+	color: rgb(247, 252, 246);	
+    height: 28px;
+    min-width: 90px;
+    margin-right: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+QTabBar::tab:hover {
+	background: rgb(255, 255, 255, 40);
+}
+QTabBar::tab:selected {
+    background: qlineargradient(spread:pad, y1:0, y2:1, stop:0 rgba(206, 206, 206),stop:1 rgba(193, 193, 193));
+	color:rgb(61, 65, 69);
+}
+QPushButton {
+    background-color: rgb(101,101,101);
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+	padding: 8px;
+    margin: 4px;
+	min-width: 6em;
+	border: 1px solid rgb(44, 44, 44);
+}
+
+QPushButton:hover {
+        background-color: qlineargradient(spread:pad, y1:0, y2:1, stop:0 rgba(78, 122, 231),stop:1 rgba(56, 97, 203));
+	color:(241, 248, 247);/*
+    border: 2px solid rgb(17, 29, 207);*/
+}
+
+QPushButton:pressed {
+            background-color: qlineargradient(spread:pad, y1:0, y2:1, stop:0 rgba(64, 90, 157),stop:1 rgba(55, 79, 143));
+	color:(137, 146, 166);}
+QWidget#tab_2 {
+	background: rgb(60, 60, 60);
+	font-size: 16px;
+	min-width: 187px;
+}
+
+QWidget#tab {
+	background: rgb(60, 60, 60);
+	font-size: 16px;
+	min-width: 187px;
+}
+QLabel{
+	background: outset;
+	font-size:16px;
+    spacing: 5px;
+	min-width: 80px;
+	margin: 4px;
+}
+QGroupBox &gt; QLabel{
+	min-width: 40px;
+}
+QSpinBox {
+	font-size:16px;
+}
+QDoubleSpinBox {
+	font-size:16px;
+}
+QGroupBox{
+	background: outset;
+}
+
+/*
+tabelwidget*/
+QTableWidget{
+color:#DCDCDC;
+background:#444444;
+border:1px solid #242424;
+alternate-background-color:#525252;/*交错颜色*/
+gridline-color:#242424;
+}
+
+/*选中item*/
+QTableWidget::item:selected{
+color:#DCDCDC;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #484848,stop:1 #383838);
+}
+
+/*
+悬浮item*/
+QTableWidget::item:hover{
+background:#5B5B5B;
+}
+/*表头*/
+QHeaderView::section{
+text-align:center;
+background:#5E5E5E;
+padding:3px;
+margin:0px;
+color:#DCDCDC;
+border:1px solid #242424;
+border-left-width:0;
+}
+
+/*表右侧的滑条*/
+QScrollBar:vertical{
+background:#484848;
+padding:0px;
+border-radius:6px;
+max-width:12px;
+}
+
+/*滑块*/
+QScrollBar::handle:vertical{
+background:#CCCCCC;
+}
+/*
+滑块悬浮，按下*/
+QScrollBar::handle:hover:vertical,QScrollBar::handle:pressed:vertical{
+background:#A7A7A7;
+}
+/*
+滑块已经划过的区域*/
+QScrollBar::sub-page:vertical{
+background:444444;
+}
+
+/*
+滑块还没有划过的区域*/
+QScrollBar::add-page:vertical{
+background:5B5B5B;
+}
+
+/*页面下移的按钮*/
+QScrollBar::add-line:vertical{
+background:none;
+}
+/*页面上移的按钮*/
+QScrollBar::sub-line:vertical{
+background:none;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,0">
+    <item>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>绘图</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>路线详情</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="geometry">
+         <rect>
+          <x>11</x>
+          <y>11</y>
+          <width>691</width>
+          <height>671</height>
+         </rect>
+        </property>
+        <column>
+         <property name="text">
+          <string>路线编号</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>车辆类型</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>满载率</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>路径</string>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+        </column>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="focusPolicy">
+       <enum>Qt::TabFocus</enum>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::NoContextMenu</enum>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <property name="font">
+        <font>
+         <family>华文细黑</family>
+         <pointsize>-1</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <attribute name="title">
+        <string>主菜单</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,1,0,0,0,1,0,0,0,1,0,1,0">
+        <property name="spacing">
+         <number>7</number>
+        </property>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>配送点数量</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox_ClientNum">
+            <property name="minimum">
+             <number>4</number>
+            </property>
+            <property name="maximum">
+             <number>500</number>
+            </property>
+            <property name="value">
+             <number>20</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="pushButton_NewData">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>生成随机数据</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="Line" name="line_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="pushButton_LoadData">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>导入数据</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_13">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_15">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QPushButton" name="pushButton_Search">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>128</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>搜索</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_16">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>最短路径</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_minDist">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_14">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <attribute name="title">
+        <string>系统参数</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0,1,0,1">
+        <item>
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>231</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>车辆参数</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="spinBox_maxAWeight">
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="spinBox_maxBWeight">
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>A车最大载重</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>B车最大载重</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>最大运输距离</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="spinBox_maxDist">
+             <property name="minimum">
+              <number>20</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>231</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>算法参数</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>迭代次数</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="spinBox_maxGeneration">
+             <property name="minimum">
+              <number>100</number>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+             <property name="singleStep">
+              <number>10</number>
+             </property>
+             <property name="value">
+              <number>1000</number>
+             </property>
+             <property name="displayIntegerBase">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>蚂蚁数量</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="spinBox_antNum">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>200</number>
+             </property>
+             <property name="singleStep">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>12</number>
+             </property>
+             <property name="displayIntegerBase">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>231</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>940</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
