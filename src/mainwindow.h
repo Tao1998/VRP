@@ -34,8 +34,6 @@ private slots:
 
     void on_pushButton_DeleteTableData_clicked();
 
-    void on_pushButton_LoadData_clicked();
-
 private:
     Ui::MainWindow *ui;
 };

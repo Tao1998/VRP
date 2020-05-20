@@ -217,14 +217,14 @@ int CAnt::ChooseNextCity()
     //==============================================================================
     //如果有时间窗限制，还要判断到达时间是否在时间窗的截止时间之前
 
-    if (g_nHTW == 1) //硬时间窗限制
-    {
-        //超过时间窗限制，直接返回配送站
-        if (m_CarAry[nCarNo].dbMovedTime+g_distance[m_nCurCity][nSelectedCity]/g_CarAry[nCarNo].dbSpeed > g_CityAry[nSelectedCity].dbTE)
-        {
-            return 0;
-        }
-    }
+//    if (g_nHTW == 1) //硬时间窗限制
+//    {
+//        //超过时间窗限制，直接返回配送站
+//        if (m_CarAry[nCarNo].dbMovedTime+g_distance[m_nCurCity][nSelectedCity]/g_CarAry[nCarNo].dbSpeed > g_CityAry[nSelectedCity].dbTE)
+//        {
+//            return 0;
+//        }
+//    }
     else if (g_nHTW == 2) //软时间窗限制，暂时不实现
     {
     }

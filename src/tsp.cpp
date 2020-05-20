@@ -18,6 +18,7 @@ CTSP::~CTSP(void)
 //设置配送点坐标为随机值
 void CTSP::SetParameterRandom()
 {
+    qDebug()<<"SetParameterRandom";
     //先把城市数量和车辆数量设置为默认
 
     //CAR_COUNT=5; //设置车辆数
@@ -48,17 +49,7 @@ void CTSP::SetParameterRandom()
         g_CarAry[i].dbSpeed=1.0;
     }
     */
-    int idx = 0;
-    for(int i=0;i<TYPE_COUNT;i++)
-    {
-        for(int j=0;j<CAR_TYPE_COUNT[i];j++)
-        {
-            g_CarAry[idx].dbMaxLength=CAR_TYPE_MAX_LENGTH[j];
-            g_CarAry[idx].dbMaxWeight=CAR_TYPE_MAX_WEIGHT[j];
-            g_CarAry[idx].dbSpeed=1.0;
-            idx++;
-        }
-    }
+
 
 
     g_CityAry[0].dbX=(rnd(0.0,100.0))/5;g_CityAry[0].dbY=(rnd(0.0,100.0))/5;g_CityAry[0].dbW=0.0; //配送站
@@ -98,10 +89,29 @@ void CTSP::SetParameterRandom()
 
 }
 
+void CTSP::GetCarData()
+{
+    int idx = 0;
+    int id=0;
+    for(int i=0;i<TYPE_COUNT;i++)
+    {
+        for(int j=0;j<CAR_TYPE_COUNT[i];j++)
+        {
+            g_CarAry[idx].dbMaxLength=CAR_TYPE_MAX_LENGTH[i];
+            g_CarAry[idx].dbMaxWeight=CAR_TYPE_MAX_WEIGHT[i];
+            g_CarAry[idx].dbSpeed=1.0;
+            id=idx;
+            qDebug()<<QString::number(id, 10)<<" "<<CAR_TYPE_MAX_WEIGHT[i]<<" "<<CAR_TYPE_MAX_WEIGHT[i];
+            idx++;
+        }
+    }
+}
+
 //恢复算法参数为默认值
 void CTSP::SetParameterDefault()
 {
     //先把城市数量和车辆数量设置为默认
+    qDebug()<<"SetParameterDefault";
 
     CAR_COUNT=5; //设置车辆数
     CITY_COUNT=20; //设置城市数量
@@ -607,33 +617,33 @@ double CTSP::Search()
     int nextCity=0;
     double temp_length=0;
     double temp_weight=0;
-    m_nBestPathCount++;
-    m_nBestPath[m_nBestPathCount-1]=CITY_COUNT+1;
-    for (int p=0;p<m_nBestPathCount;p++) {
-        qDebug()<<m_nBestPath[p];
-        if(m_nBestPath[p]>CITY_COUNT)
-        {
-            nextCity=0;
-            temp_length=temp_length+g_distance[preCity][nextCity];
-            m=m+"L="+QString::number(temp_length,'f', 2)+" "+"W="+QString::number(temp_weight,'f', 2)+" ";
-            preCity=nextCity;
-            nextCity=m_nBestPath[p+1];
-            temp_length=0;
-            temp_weight=0;
+//    m_nBestPathCount++;
+//    m_nBestPath[m_nBestPathCount-1]=CITY_COUNT+1;
+//    for (int p=0;p<m_nBestPathCount;p++) {
+//        qDebug()<<m_nBestPath[p];
+//        if(m_nBestPath[p]>CITY_COUNT)
+//        {
+//            nextCity=0;
+//            temp_length=temp_length+g_distance[preCity][nextCity];
+//            m=m+"L="+QString::number(temp_length,'f', 2)+" "+"W="+QString::number(temp_weight,'f', 2)+" ";
+//            preCity=nextCity;
+//            nextCity=m_nBestPath[p+1];
+//            temp_length=0;
+//            temp_weight=0;
 
-            //temp_length=g_distance[preCity][nextCity];
-            //m=m+" "+QString::number(temp_length,'f', 4);
-            m=m+"["+QString::number(GetCarNo(m_nBestPath[p]), 10)+"]"+" ";
-        }
-        else {
-            temp_weight=temp_weight+g_CityAry[m_nBestPath[p]].dbW;
-            nextCity=m_nBestPath[p];
-            temp_length=temp_length+g_distance[preCity][nextCity];
-            preCity=nextCity;
-            m=m+QString::number(m_nBestPath[p], 10)+" ";
-        }
-    }
-    qDebug()<<m.mid(14, m.length()-19);
+//            //temp_length=g_distance[preCity][nextCity];
+//            //m=m+" "+QString::number(temp_length,'f', 4);
+//            m=m+"["+QString::number(GetCarNo(m_nBestPath[p]), 10)+"]"+" ";
+//        }
+//        else {
+//            temp_weight=temp_weight+g_CityAry[m_nBestPath[p]].dbW;
+//            nextCity=m_nBestPath[p];
+//            temp_length=temp_length+g_distance[preCity][nextCity];
+//            preCity=nextCity;
+//            m=m+QString::number(m_nBestPath[p], 10)+" ";
+//        }
+//    }
+//    qDebug()<<m.mid(14, m.length()-19);
 
     best_ant_count=m_nBestPathCount;
     for (int p=0;p<m_nBestPathCount;p++) {
@@ -641,6 +651,7 @@ double CTSP::Search()
     }
     QString Path = "";
     for (int p=0;p<m_nBestPathCount;p++) {
+        //qDebug()<<m_nBestPath[p];
         if(m_nBestPath[p]>CITY_COUNT)
         {
             Path += "["+QString::number(m_nBestPath[p])+"] ";//打印最佳路径

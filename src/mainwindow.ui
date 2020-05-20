@@ -289,7 +289,7 @@ background:none;
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="font">
@@ -596,11 +596,6 @@ background:none;
                <string>新建行</string>
               </property>
              </row>
-             <row>
-              <property name="text">
-               <string>新建行</string>
-              </property>
-             </row>
              <column>
               <property name="text">
                <string>车型</string>
@@ -645,32 +640,12 @@ background:none;
              </item>
              <item row="0" column="2">
               <property name="text">
-               <string>5</string>
+               <string>8</string>
               </property>
              </item>
              <item row="0" column="3">
               <property name="text">
-               <string>10</string>
-              </property>
-             </item>
-             <item row="1" column="0">
-              <property name="text">
-               <string>B</string>
-              </property>
-             </item>
-             <item row="1" column="1">
-              <property name="text">
-               <string>50</string>
-              </property>
-             </item>
-             <item row="1" column="2">
-              <property name="text">
-               <string>8</string>
-              </property>
-             </item>
-             <item row="1" column="3">
-              <property name="text">
-               <string>10</string>
+               <string>5</string>
               </property>
              </item>
             </widget>
@@ -811,7 +786,7 @@ background:none;
      <x>0</x>
      <y>0</y>
      <width>957</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

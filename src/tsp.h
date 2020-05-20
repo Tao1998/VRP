@@ -61,6 +61,7 @@ public:
     void SaveBestAnt(); //保存全局最优蚂蚁和迭代最优蚂蚁
     void UpdatePheromone(int nFlag); //更新环境信息素
     double GetGreedSearchLen(); //得到用贪心算法得到的路径长度
+    void GetCarData();//获取表格车辆数据
 
     //遗传算法部分
     void Propagate(); //交叉繁殖
