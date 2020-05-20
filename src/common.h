@@ -76,15 +76,9 @@ extern double CAR_TYPE_MAX_LENGTH[N_MAX_CAR_TYPE];  //不同车型最大里程
 extern double CAR_TYPE_MAX_WEIGHT[N_MAX_CAR_TYPE];  //不同车型载重
 extern int CAR_TYPE_COUNT[N_MAX_CAR_TYPE];  //不同车型数量
 extern int CITY_COUNT;  //城市数量( 注意不包括配送站!!! )
-extern int CARA_COUNT;  //车辆A数量
-extern int CARB_COUNT;  //车辆B数量
-extern int MAXA_WEIGHT; //车辆A的最大载重
-extern int MAXB_WEIGHT; //车辆B的最大载重
 extern double MAX_WEIGHT;  //车辆最大载重
 extern double MAX_CITYWEIGHT;//城市最大载重
 extern double MAX_LENGTH;  //最大运输距离
-extern int MAXA_LENGTH; //车辆A最大行驶距离
-extern int MAXB_LENGTH; //车辆B最大行驶距离
 extern double MAX_CITYLENGTH;//城市之间最远距离
 
 //蚁群算法参数

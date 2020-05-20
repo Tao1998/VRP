@@ -111,7 +111,6 @@ void CTSP::GetCarData()
 void CTSP::SetParameterDefault()
 {
     //先把城市数量和车辆数量设置为默认
-    qDebug()<<"SetParameterDefault";
 
     CAR_COUNT=5; //设置车辆数
     CITY_COUNT=20; //设置城市数量

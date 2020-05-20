@@ -6,6 +6,7 @@
 #include<QPainter>
 #include<QDebug>
 #include<QMessageBox>
+#include<QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -26,6 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     SetTableStyle();
+    SetPosTable();
     ui->tab_3->installEventFilter(this);
 }
 
@@ -143,9 +145,32 @@ void MainWindow::SetTableStyle()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
 
     ui->tableWidget_2->horizontalHeader()->setVisible(true);
-    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); //把给定列设置为给定模式
+    ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+
+    ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+}
+
+void MainWindow::SetPosTable()
+{
+    qDebug()<<"row: "<< ui->tableWidget_pos->rowCount();
+    ui->tableWidget_pos->removeRow(ui->tableWidget_pos->rowCount());
+    ui->tableWidget_pos->setRowCount(CITY_COUNT+1);
+    ui->tableWidget_pos->setItem(0,0,new QTableWidgetItem(QString::number(0)));
+    ui->tableWidget_pos->setItem(0,1,new QTableWidgetItem(QString::number(g_CityAry[0].dbX)));
+    ui->tableWidget_pos->setItem(0,2,new QTableWidgetItem(QString::number(g_CityAry[0].dbY)));
+    ui->tableWidget_pos->setItem(0,3,new QTableWidgetItem(QString::number(g_CityAry[0].dbW)));
+    for(int i=1;i<CITY_COUNT+1;i++)
+    {
+        ui->tableWidget_pos->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget_pos->setItem(i,1,new QTableWidgetItem(QString::number(g_CityAry[i].dbX)));
+        ui->tableWidget_pos->setItem(i,2,new QTableWidgetItem(QString::number(g_CityAry[i].dbY)));
+        ui->tableWidget_pos->setItem(i,3,new QTableWidgetItem(QString::number(g_CityAry[i].dbW)));
+    }
 }
 
 void MainWindow::MultiCarInit()
@@ -172,6 +197,7 @@ void MainWindow::on_pushButton_NewData_clicked()
 {
     CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
     ctst->SetParameterRandom();
+    SetPosTable(); // 设置配送点信息表
     ui->tab_3->repaint(); // 重新描点
 }
 
@@ -224,3 +250,54 @@ void MainWindow::on_pushButton_DeleteTableData_clicked()
         ui->tableWidget_2->removeRow(row_index);
     }
 }
+
+void MainWindow::on_pushButton_LoadData_clicked()
+{
+    QString FileName;
+    FileName=QFileDialog::getOpenFileName(this,tr("文件"));
+    if(!FileName.isNull())
+    {
+        QFile file(FileName);
+        if(!file.open(QIODevice::ReadOnly))
+            qDebug()<<"file open error";
+        QTextStream *out=new QTextStream(&file);
+        QStringList tempoption=out->readAll().split("\n");
+        QStringList tempbar=tempoption.at(0).split(",");
+        g_CityAry[0].dbX=tempbar.at(0).toDouble();
+        g_CityAry[0].dbY=tempbar.at(1).toDouble();
+        g_CityAry[0].dbW=0.0;
+        for(int i=1;i<tempoption.count();i++)
+        {
+            tempbar=tempoption.at(i).split(",");
+            g_CityAry[i].dbX=tempbar.at(0).toDouble();
+            g_CityAry[i].dbY=tempbar.at(1).toDouble();
+            g_CityAry[i].dbW=tempbar.at(2).toDouble();
+        }
+        file.close();
+    }
+    // min—max标准化 美化GUI 让点落在中心区域
+    int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        if(g_CityAry[i].dbX<dbx_min)
+            dbx_min = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbX>dbx_max)
+            dbx_max = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbY<dby_min)
+            dby_min = g_CityAry[i].dbY;
+        if(g_CityAry[i].dbY>dby_max)
+            dby_max = g_CityAry[i].dbY;
+    }
+    int dbx_d = dbx_max-dbx_min, dby_d = dby_max-dby_min;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        g_CityAry[i].dbX_draw = (g_CityAry[i].dbX-dbx_min) / dbx_d * 100;
+        g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
+    }
+
+    //计算两两城市间距离
+    ctst->CalCityDistance();
+    SetPosTable(); // 设置配送点信息表
+    ui->tab_3->repaint();
+}
+

@@ -209,7 +209,7 @@ background:none;
     <item>
      <widget class="QTabWidget" name="tabWidget_2">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
@@ -220,48 +220,90 @@ background:none;
        <attribute name="title">
         <string>路线详情</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>11</y>
-          <width>691</width>
-          <height>671</height>
-         </rect>
-        </property>
-        <column>
-         <property name="text">
-          <string>路线编号</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>车辆类型</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>满载率</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>路径</string>
-         </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
-        </column>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <column>
+           <property name="text">
+            <string>路线编号</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>车辆类型</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>满载率</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>路径</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_5">
+       <attribute name="title">
+        <string>配送点信息</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QTableWidget" name="tableWidget_pos">
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>配送点编号</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>横坐标</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>纵坐标</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>货物量</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -289,7 +331,7 @@ background:none;
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <property name="font">
