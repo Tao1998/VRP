@@ -79,7 +79,6 @@ void MainWindow::DrawTab()
             {
                 route_idx++;
                 car_No = ctst->GetCarNo(m);
-                weight=0.0;
                 strRoute = "0-";
                 // 设置单元格样式
                 QTableWidgetItem *item = new QTableWidgetItem(QString::number(route_idx));
@@ -94,7 +93,6 @@ void MainWindow::DrawTab()
                 m=0;
             }
             else{ // 绘制配送点
-                weight=weight+g_CityAry[m].dbW;
 //                painter.setPen(QPen(Qt::white));//outline color
                 painter.setBrush(intColor(route_idx, best_ant_count-CITY_COUNT));
                 painter.drawEllipse(g_CityAry[m].dbX_draw*5+100,rect_width-g_CityAry[m].dbY_draw*5-100,30,30); 
@@ -110,6 +108,9 @@ void MainWindow::DrawTab()
                 strRoute += "0";
                 ui->tableWidget->setItem(route_idx,3,new QTableWidgetItem(strRoute));//填入表格
 
+            }
+            else{ // 配送点
+                weight=weight+g_CityAry[n].dbW;
             }
             // best_ant_count-CITY_COUNT 路线数量
             painter.setPen(QPen(intColor(route_idx, best_ant_count-CITY_COUNT),3));//设置画笔形式
@@ -207,17 +208,17 @@ void MainWindow::on_pushButton_Search_clicked()
     MultiCarInit();
     if(CAR_COUNT==0)
     {
-        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆数目应大于0"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆数目应大于0", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     if(MAX_CITYLENGTH>MAX_LENGTH)
     {
-        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆无法到达最远城市"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆无法到达最远城市", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     if(MAX_CITYWEIGHT>MAX_WEIGHT)
     {
-        QMessageBox::information(NULL, QString::fromLocal8Bit("警告"), QString::fromLocal8Bit("车辆无法到达载重要求"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆无法到达载重要求", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
@@ -254,7 +255,7 @@ void MainWindow::on_pushButton_DeleteTableData_clicked()
 void MainWindow::on_pushButton_LoadData_clicked()
 {
     QString FileName;
-    FileName=QFileDialog::getOpenFileName(this,tr("文件"));
+    FileName=QFileDialog::getOpenFileName(this,tr("文件"),".",tr("Excel(*.csv)"));
     if(!FileName.isNull())
     {
         QFile file(FileName);
@@ -266,15 +267,23 @@ void MainWindow::on_pushButton_LoadData_clicked()
         g_CityAry[0].dbX=tempbar.at(0).toDouble();
         g_CityAry[0].dbY=tempbar.at(1).toDouble();
         g_CityAry[0].dbW=0.0;
+        int count = 0;
         for(int i=1;i<tempoption.count();i++)
         {
             tempbar=tempoption.at(i).split(",");
+            if(tempbar.at(0) == "")// 跳过空行
+            {
+                continue;
+            }
             g_CityAry[i].dbX=tempbar.at(0).toDouble();
             g_CityAry[i].dbY=tempbar.at(1).toDouble();
             g_CityAry[i].dbW=tempbar.at(2).toDouble();
+            count++;
         }
         file.close();
+        CITY_COUNT = count;
     }
+
     // min—max标准化 美化GUI 让点落在中心区域
     int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
     for(int i=0;i<=CITY_COUNT;i++)
@@ -295,8 +304,7 @@ void MainWindow::on_pushButton_LoadData_clicked()
         g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
     }
 
-    //计算两两城市间距离
-    ctst->CalCityDistance();
+    ctst->CalCityDistance();//计算两两城市间距离
     SetPosTable(); // 设置配送点信息表
     ui->tab_3->repaint();
 }

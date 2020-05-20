@@ -611,39 +611,6 @@ double CTSP::Search()
     }
     qDebug()<<"迭代结束";
 
-    QString m="";
-    int preCity=0;
-    int nextCity=0;
-    double temp_length=0;
-    double temp_weight=0;
-//    m_nBestPathCount++;
-//    m_nBestPath[m_nBestPathCount-1]=CITY_COUNT+1;
-//    for (int p=0;p<m_nBestPathCount;p++) {
-//        qDebug()<<m_nBestPath[p];
-//        if(m_nBestPath[p]>CITY_COUNT)
-//        {
-//            nextCity=0;
-//            temp_length=temp_length+g_distance[preCity][nextCity];
-//            m=m+"L="+QString::number(temp_length,'f', 2)+" "+"W="+QString::number(temp_weight,'f', 2)+" ";
-//            preCity=nextCity;
-//            nextCity=m_nBestPath[p+1];
-//            temp_length=0;
-//            temp_weight=0;
-
-//            //temp_length=g_distance[preCity][nextCity];
-//            //m=m+" "+QString::number(temp_length,'f', 4);
-//            m=m+"["+QString::number(GetCarNo(m_nBestPath[p]), 10)+"]"+" ";
-//        }
-//        else {
-//            temp_weight=temp_weight+g_CityAry[m_nBestPath[p]].dbW;
-//            nextCity=m_nBestPath[p];
-//            temp_length=temp_length+g_distance[preCity][nextCity];
-//            preCity=nextCity;
-//            m=m+QString::number(m_nBestPath[p], 10)+" ";
-//        }
-//    }
-//    qDebug()<<m.mid(14, m.length()-19);
-
     best_ant_count=m_nBestPathCount;
     for (int p=0;p<m_nBestPathCount;p++) {
         best_ant[p]=m_nBestPath[p];//打印最佳路径
