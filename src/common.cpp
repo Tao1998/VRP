@@ -3,22 +3,16 @@
 #include<string.h>
 #include<stdlib.h>
 
-int CAR_COUNT=5;  //车辆数量
+int CAR_COUNT=0;  //车辆数量
 int TYPE_COUNT=1; // 车辆种类
 QString CAR_TYPE_NAME[N_MAX_CAR_TYPE];  //不同车型名称
 double CAR_TYPE_MAX_LENGTH[N_MAX_CAR_TYPE];  //不同车型最大里程
 double CAR_TYPE_MAX_WEIGHT[N_MAX_CAR_TYPE];  //不同车型载重
 int CAR_TYPE_COUNT[N_MAX_CAR_TYPE];  //不同车型数量
 int CITY_COUNT=20; //城市数量 ( 不包含配送站 )
-int CARA_COUNT=5;  //车辆A数量
-int CARB_COUNT=5;  //车辆B数量
-int MAXA_WEIGHT=5; //车辆A的最大载重
-int MAXB_WEIGHT=8; //车辆B的最大载重
-int MAX_WEIGHT=0;  //车辆最大载重
+double MAX_WEIGHT=0;  //车辆最大载重
 double MAX_CITYWEIGHT=0;//城市最大载重
-int MAXA_LENGTH=50;  //车辆A最大行驶距离
-int MAXB_LENGTH=50;  //车辆B最大行驶距离
-int MAX_LENGTH=0;    //车辆最大行驶距离
+double MAX_LENGTH=0;    //车辆最大行驶距离
 double MAX_CITYLENGTH=0;//城市之间最大距离
 
 //蚁群算法参数

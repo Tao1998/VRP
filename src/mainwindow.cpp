@@ -6,6 +6,7 @@
 #include<QPainter>
 #include<QDebug>
 #include<QMessageBox>
+#include<QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -150,13 +151,21 @@ void MainWindow::SetTableStyle()
 
 void MainWindow::MultiCarInit()
 {
+    CAR_COUNT=0;
+    MAX_LENGTH=0;
+    MAX_WEIGHT=0;
     TYPE_COUNT = ui->tableWidget_2->rowCount();
     for(int i=0;i<TYPE_COUNT;i++)
     {
         CAR_TYPE_NAME[i] = ui->tableWidget_2->item(i,0)->text();
         CAR_TYPE_MAX_LENGTH[i] = ui->tableWidget_2->item(i,1)->text().toDouble();
+        if(CAR_TYPE_MAX_LENGTH[i]>MAX_LENGTH)
+            MAX_LENGTH=CAR_TYPE_MAX_LENGTH[i];
         CAR_TYPE_MAX_WEIGHT[i] = ui->tableWidget_2->item(i,2)->text().toDouble();
+        if(CAR_TYPE_MAX_WEIGHT[i]>MAX_WEIGHT)
+            MAX_WEIGHT=CAR_TYPE_MAX_WEIGHT[i];
         CAR_TYPE_COUNT[i] = ui->tableWidget_2->item(i,3)->text().toInt();
+        CAR_COUNT+=CAR_TYPE_COUNT[i];
     }
 }
 
@@ -196,6 +205,55 @@ void MainWindow::on_pushButton_Search_clicked()
     situation=1;
     QEvent *event1=new QEvent(QEvent::WindowActivate);//发送WindowActivate事件来刷新绘图
     QApplication::postEvent(this, event1);
+}
+
+void MainWindow::on_pushButton_LoadData_clicked()
+{
+    QString FileName;
+    FileName=QFileDialog::getOpenFileName(this,tr("文件"));
+    if(!FileName.isNull())
+    {
+        QFile file(FileName);
+        if(!file.open(QIODevice::ReadOnly))
+            qDebug()<<"file open error";
+        QTextStream *out=new QTextStream(&file);
+        QStringList tempoption=out->readAll().split("\n");
+        QStringList tempbar=tempoption.at(0).split(",");
+        g_CityAry[0].dbX=tempbar.at(0).toDouble();
+        g_CityAry[0].dbY=tempbar.at(1).toDouble();
+        g_CityAry[0].dbW=0.0;
+        for(int i=1;i<tempoption.count();i++)
+        {
+            tempbar=tempoption.at(i).split(",");
+            g_CityAry[i].dbX=tempbar.at(0).toDouble();
+            g_CityAry[i].dbY=tempbar.at(1).toDouble();
+            g_CityAry[i].dbW=tempbar.at(2).toDouble();
+        }
+        file.close();
+    }
+    // min—max标准化 美化GUI 让点落在中心区域
+    int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        if(g_CityAry[i].dbX<dbx_min)
+            dbx_min = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbX>dbx_max)
+            dbx_max = g_CityAry[i].dbX;
+        if(g_CityAry[i].dbY<dby_min)
+            dby_min = g_CityAry[i].dbY;
+        if(g_CityAry[i].dbY>dby_max)
+            dby_max = g_CityAry[i].dbY;
+    }
+    int dbx_d = dbx_max-dbx_min, dby_d = dby_max-dby_min;
+    for(int i=0;i<=CITY_COUNT;i++)
+    {
+        g_CityAry[i].dbX_draw = (g_CityAry[i].dbX-dbx_min) / dbx_d * 100;
+        g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
+    }
+
+    //计算两两城市间距离
+    ctst->CalCityDistance();
+    ui->tab_3->repaint();
 }
 
 
