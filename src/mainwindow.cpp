@@ -45,7 +45,7 @@ void MainWindow::DrawTab()
     QPainter painter(ui->tab_3);
     painter.setPen(QPen(QColor (206, 206, 206),1));
 
-    int rect_width = 700,p_size = 30; // 绘图窗口大小 点的大小
+    int rect_width = 700,p_size = 20; // 绘图窗口大小 点的大小
     painter.drawRect(0,0,rect_width,rect_width);
     int route_idx=-1;
     if(situation == 0){
@@ -58,7 +58,9 @@ void MainWindow::DrawTab()
         }
         painter.setPen(QPen(QColor (20, 20, 20),4));//设置画笔形式
         for (int i=0;i<CITY_COUNT+1;i++) {
-            painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));
+            QRectF rect(g_CityAry[i].dbX_draw*5+100,rect_width-g_CityAry[i].dbY_draw*5-100,20,p_size);
+            painter.drawText(rect, Qt::AlignHCenter | Qt::AlignVCenter, QString::number(i));
+//            painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));
         }
     }
     if(situation==1)
@@ -131,7 +133,9 @@ void MainWindow::DrawTab()
 
         for (int i=0;i<CITY_COUNT+1;i++) {
             painter.setPen(QPen(QColor (10, 10, 10)));//设置画笔形式
-            painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));
+            QRectF rect(g_CityAry[i].dbX_draw*5+100,rect_width-g_CityAry[i].dbY_draw*5-100,20,p_size);
+            painter.drawText(rect, Qt::AlignHCenter | Qt::AlignVCenter, QString::number(i));
+//            painter.drawText(g_CityAry[i].dbX_draw*5+100+7.5,rect_width-g_CityAry[i].dbY_draw*5-100+14,QString::number(i));
         }
     }
 
@@ -208,6 +212,7 @@ void MainWindow::on_pushButton_Search_clicked()
 {
     clock_t  time_kp = clock();
     MultiCarInit();
+    qDebug()<<"MAX_CITYWEIGHT:"<<MAX_CITYWEIGHT<<"CAR_WEIGHT"<<MAX_WEIGHT;
     if(CAR_COUNT==0)
     {
         QMessageBox::information(nullptr, "警告", "车辆数目应大于0", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
@@ -215,12 +220,13 @@ void MainWindow::on_pushButton_Search_clicked()
     }
     if(2*MAX_CITYLENGTH>MAX_LENGTH)
     {
-        QMessageBox::information(nullptr, "警告", "车辆无法往返最远城市，车辆最大行驶里程应大于"+QString::number(2*MAX_CITYLENGTH), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆无法往返最远配送点，车辆最大行驶里程应大于"+QString::number(2*MAX_CITYLENGTH), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     if(MAX_CITYWEIGHT>MAX_WEIGHT)
     {
-        QMessageBox::information(nullptr, "警告", "车辆无法达到载重要求，车辆最大载重应大于"+QString::number(MAX_WEIGHT), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        qDebug()<<"MAX_CITYWEIGHT:"<<MAX_CITYWEIGHT<<"CAR_WEIGHT"<<MAX_WEIGHT;
+        QMessageBox::information(nullptr, "警告", "车辆无法达到载重要求，车辆最大载重应大于"+QString::number(MAX_CITYWEIGHT), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
@@ -232,7 +238,7 @@ void MainWindow::on_pushButton_Search_clicked()
     ctst->GetCarData();
     ctst->Init();
     ui->label_minDist->setText(QString::number(ctst->Search(),'f', 4));
-    ui->label_time->setText(QString::number( (clock() - time_kp) / (double)CLOCKS_PER_SEC,'f',4)+"s");
+    ui->label_time->setText(QString::number( (clock() - time_kp) / (double)CLOCKS_PER_SEC,'f',2)+"s");
     situation=1;
     QEvent *event1=new QEvent(QEvent::WindowActivate);//发送WindowActivate事件来刷新绘图
     QApplication::postEvent(this, event1);
@@ -308,6 +314,7 @@ void MainWindow::on_pushButton_LoadData_clicked()
     }
 
     ctst->CalCityDistance();//计算两两城市间距离
+    ctst->CalCityMaxWeight(); // 计算最大载重
     SetPosTable(); // 设置配送点信息表
     ui->tab_3->repaint();
 }

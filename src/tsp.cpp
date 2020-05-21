@@ -59,8 +59,6 @@ void CTSP::SetParameterRandom()
         g_CityAry[i].dbX=(rnd(0.0,100.0))/5;
         g_CityAry[i].dbY=(rnd(0.0,100.0))/5;
         g_CityAry[i].dbW=(rnd(0.0,10.0))/5;
-        if(g_CityAry[i].dbW>MAX_CITYWEIGHT)
-            MAX_CITYWEIGHT=g_CityAry[i].dbW;
         qDebug()<<"X:"<<g_CityAry[i].dbX<<"  Y:"<<g_CityAry[i].dbY;
     }
 
@@ -86,7 +84,7 @@ void CTSP::SetParameterRandom()
 
     //计算两两城市间距离
     CalCityDistance();
-
+    CalCityMaxWeight();
 }
 
 void CTSP::GetCarData()
@@ -188,7 +186,7 @@ void CTSP::SetParameterDefault()
 
     //计算两两城市间距离
     CalCityDistance();
-
+    CalCityMaxWeight();
 }
 
 
@@ -231,6 +229,15 @@ void CTSP::CalCityDistance()
             }
 
         }
+    }
+}
+
+void CTSP::CalCityMaxWeight(){
+    MAX_CITYWEIGHT = 0.0;
+    for(int i=1;i<=CITY_COUNT;i++)
+    {
+        if(g_CityAry[i].dbW>MAX_CITYWEIGHT)
+            MAX_CITYWEIGHT=g_CityAry[i].dbW;
     }
 }
 

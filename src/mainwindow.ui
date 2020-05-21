@@ -14,8 +14,8 @@
    <string>配送路线优化</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../resources/map.png</normaloff>../resources/map.png</iconset>
+   <iconset resource="img.qrc">
+    <normaloff>:/image/map.ico</normaloff>:/image/map.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">*{font: 9pt &quot;华文细黑&quot;;
@@ -839,6 +839,8 @@ background:none;
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
  <connections/>
 </ui>

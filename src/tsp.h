@@ -78,6 +78,7 @@ public:
     QString GetCarType(int nNode); //根据路径中的点编号得到车辆类型
 
     void CalCityDistance(); //计算两两城市间距离
+    void CalCityMaxWeight(); //计算城市最大载重
     void SetParameterDefault(); //恢复算法参数为默认值
 
     void SetParameterRandom();//设置配送点坐标为随机值
