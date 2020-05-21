@@ -3,6 +3,7 @@
 #include"ant.h"
 #include"common.h"
 #include"tsp.h"
+#include<ctime>
 #include<QPainter>
 #include<QDebug>
 #include<QMessageBox>
@@ -44,7 +45,7 @@ void MainWindow::DrawTab()
     QPainter painter(ui->tab_3);
     painter.setPen(QPen(QColor (206, 206, 206),1));
 
-    int rect_width = 700; // 绘图窗口大小
+    int rect_width = 700,p_size = 30; // 绘图窗口大小 点的大小
     painter.drawRect(0,0,rect_width,rect_width);
     int route_idx=-1;
     if(situation == 0){
@@ -53,7 +54,7 @@ void MainWindow::DrawTab()
 //        painter.setPen(QPen(QColor (206, 206, 206),4));//outline color
         painter.setBrush(QColor (206, 206, 206));
         for (int i=0;i<CITY_COUNT+1;i++) {
-            painter.drawEllipse(g_CityAry[i].dbX_draw*5+100,rect_width-g_CityAry[i].dbY_draw*5-100,30,30);
+            painter.drawEllipse(g_CityAry[i].dbX_draw*5+100,rect_width-g_CityAry[i].dbY_draw*5-100,p_size,p_size);
         }
         painter.setPen(QPen(QColor (20, 20, 20),4));//设置画笔形式
         for (int i=0;i<CITY_COUNT+1;i++) {
@@ -65,7 +66,7 @@ void MainWindow::DrawTab()
         // 绘制配送站
         painter.setPen(QPen(QColor (206, 206, 206),4));//设置画笔形式
         painter.setBrush(QColor (206, 206, 206));
-        painter.drawEllipse(g_CityAry[0].dbX_draw*5+100,rect_width-g_CityAry[0].dbY_draw*5-100,30,30);
+        painter.drawEllipse(g_CityAry[0].dbX_draw*5+100,rect_width-g_CityAry[0].dbY_draw*5-100,p_size,p_size);
         qDebug()<< "X:"<<g_CityAry[0].dbX_draw<< " Y:"<<rect_width-g_CityAry[0].dbY_draw;
         QString strRoute = "0-";
         ui->tableWidget->setRowCount(best_ant_count-CITY_COUNT);
@@ -95,7 +96,7 @@ void MainWindow::DrawTab()
             else{ // 绘制配送点
 //                painter.setPen(QPen(Qt::white));//outline color
                 painter.setBrush(intColor(route_idx, best_ant_count-CITY_COUNT));
-                painter.drawEllipse(g_CityAry[m].dbX_draw*5+100,rect_width-g_CityAry[m].dbY_draw*5-100,30,30); 
+                painter.drawEllipse(g_CityAry[m].dbX_draw*5+100,rect_width-g_CityAry[m].dbY_draw*5-100,p_size,p_size);
                 strRoute += QString::number(m)+"-";
             }
             if (n>CITY_COUNT) //是车
@@ -120,7 +121,7 @@ void MainWindow::DrawTab()
         //最后城市和配送站之间的信息素
         painter.setBrush(intColor(route_idx, best_ant_count-CITY_COUNT));
         painter.drawLine(g_CityAry[n].dbX_draw*5+100+14,rect_width-g_CityAry[n].dbY_draw*5-100+14,g_CityAry[0].dbX_draw*5+100+14,rect_width-g_CityAry[0].dbY_draw*5-100+14);
-        painter.drawEllipse(g_CityAry[n].dbX_draw*5+100,rect_width-g_CityAry[n].dbY_draw*5-100,30,30);
+        painter.drawEllipse(g_CityAry[n].dbX_draw*5+100,rect_width-g_CityAry[n].dbY_draw*5-100,p_size,p_size);
 
         strRoute += QString::number(n)+"-0";
         ui->tableWidget->setItem(route_idx,3,new QTableWidgetItem(strRoute));//填入表格
@@ -150,6 +151,7 @@ void MainWindow::SetTableStyle()
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tableWidget_2->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
+    ui->tableWidget_pos->setEditTriggers(QAbstractItemView::NoEditTriggers); //设置不可编辑
     ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tableWidget_pos->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -204,21 +206,21 @@ void MainWindow::on_pushButton_NewData_clicked()
 
 void MainWindow::on_pushButton_Search_clicked()
 {
-
+    clock_t  time_kp = clock();
     MultiCarInit();
     if(CAR_COUNT==0)
     {
         QMessageBox::information(nullptr, "警告", "车辆数目应大于0", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
-    if(MAX_CITYLENGTH>MAX_LENGTH)
+    if(2*MAX_CITYLENGTH>MAX_LENGTH)
     {
-        QMessageBox::information(nullptr, "警告", "车辆无法到达最远城市", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆无法往返最远城市，车辆最大行驶里程应大于"+QString::number(2*MAX_CITYLENGTH), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     if(MAX_CITYWEIGHT>MAX_WEIGHT)
     {
-        QMessageBox::information(nullptr, "警告", "车辆无法到达载重要求", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        QMessageBox::information(nullptr, "警告", "车辆无法达到载重要求，车辆最大载重应大于"+QString::number(MAX_WEIGHT), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         return;
     }
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
@@ -230,6 +232,7 @@ void MainWindow::on_pushButton_Search_clicked()
     ctst->GetCarData();
     ctst->Init();
     ui->label_minDist->setText(QString::number(ctst->Search(),'f', 4));
+    ui->label_time->setText(QString::number( (clock() - time_kp) / (double)CLOCKS_PER_SEC,'f',4)+"s");
     situation=1;
     QEvent *event1=new QEvent(QEvent::WindowActivate);//发送WindowActivate事件来刷新绘图
     QApplication::postEvent(this, event1);

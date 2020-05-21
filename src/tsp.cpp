@@ -854,9 +854,6 @@ bool CTSP::Vary()
     int nP2=0;
     int nTemp=0;
 
-    int A=0;
-    int B=0;
-    int C=0;
     for (int i=0;i<nCount;i++)
     {
         //随机产生交换位置
