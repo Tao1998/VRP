@@ -291,31 +291,33 @@ void MainWindow::on_pushButton_LoadData_clicked()
         }
         file.close();
         CITY_COUNT = count;
+        situation = 0;
+        // min—max标准化 美化GUI 让点落在中心区域
+        int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
+        for(int i=0;i<=CITY_COUNT;i++)
+        {
+            if(g_CityAry[i].dbX<dbx_min)
+                dbx_min = g_CityAry[i].dbX;
+            if(g_CityAry[i].dbX>dbx_max)
+                dbx_max = g_CityAry[i].dbX;
+            if(g_CityAry[i].dbY<dby_min)
+                dby_min = g_CityAry[i].dbY;
+            if(g_CityAry[i].dbY>dby_max)
+                dby_max = g_CityAry[i].dbY;
+        }
+        int dbx_d = dbx_max-dbx_min, dby_d = dby_max-dby_min;
+        for(int i=0;i<=CITY_COUNT;i++)
+        {
+            g_CityAry[i].dbX_draw = (g_CityAry[i].dbX-dbx_min) / dbx_d * 100;
+            g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
+        }
+
+        ctst->CalCityDistance();//计算两两城市间距离
+        ctst->CalCityMaxWeight(); // 计算最大载重
+        SetPosTable(); // 设置配送点信息表
+        ui->tab_3->repaint();
     }
 
-    // min—max标准化 美化GUI 让点落在中心区域
-    int dbx_max=g_CityAry[0].dbX, dbx_min=g_CityAry[0].dbX,dby_max=g_CityAry[0].dbY, dby_min=g_CityAry[0].dbY;
-    for(int i=0;i<=CITY_COUNT;i++)
-    {
-        if(g_CityAry[i].dbX<dbx_min)
-            dbx_min = g_CityAry[i].dbX;
-        if(g_CityAry[i].dbX>dbx_max)
-            dbx_max = g_CityAry[i].dbX;
-        if(g_CityAry[i].dbY<dby_min)
-            dby_min = g_CityAry[i].dbY;
-        if(g_CityAry[i].dbY>dby_max)
-            dby_max = g_CityAry[i].dbY;
-    }
-    int dbx_d = dbx_max-dbx_min, dby_d = dby_max-dby_min;
-    for(int i=0;i<=CITY_COUNT;i++)
-    {
-        g_CityAry[i].dbX_draw = (g_CityAry[i].dbX-dbx_min) / dbx_d * 100;
-        g_CityAry[i].dbY_draw = (g_CityAry[i].dbY-dby_min) / dby_d * 100;
-    }
 
-    ctst->CalCityDistance();//计算两两城市间距离
-    ctst->CalCityMaxWeight(); // 计算最大载重
-    SetPosTable(); // 设置配送点信息表
-    ui->tab_3->repaint();
 }
 

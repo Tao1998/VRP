@@ -792,7 +792,7 @@ background:none;
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>200</number>
+              <number>100</number>
              </property>
              <property name="singleStep">
               <number>1</number>
