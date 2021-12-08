@@ -200,6 +200,44 @@ void MainWindow::MultiCarInit()
     }
 }
 
+
+int MainWindow::CarCheck()
+{
+    int Check_CAR_COUNT=0;
+    int Check_MAX_LENGTH=0;
+    int Check_MAX_WEIGHT=0;
+    int Check_TYPE_COUNT = ui->tableWidget_2->rowCount();
+    for(int i=0;i<Check_TYPE_COUNT;i++)
+    {
+        CAR_TYPE_NAME[i] = ui->tableWidget_2->item(i,0)->text();
+        CAR_TYPE_MAX_LENGTH[i] = ui->tableWidget_2->item(i,1)->text().toDouble();
+        if(CAR_TYPE_MAX_LENGTH[i]>Check_MAX_LENGTH)
+            Check_MAX_LENGTH=CAR_TYPE_MAX_LENGTH[i];
+        CAR_TYPE_MAX_WEIGHT[i] = ui->tableWidget_2->item(i,2)->text().toDouble();
+        if(CAR_TYPE_MAX_WEIGHT[i]>Check_MAX_WEIGHT)
+            Check_MAX_WEIGHT=CAR_TYPE_MAX_WEIGHT[i];
+        CAR_TYPE_COUNT[i] = ui->tableWidget_2->item(i,3)->text().toInt();
+        Check_CAR_COUNT+=CAR_TYPE_COUNT[i];
+    }
+
+    if(Check_CAR_COUNT==0)
+    {
+        QMessageBox::information(nullptr, "警告", "车辆数目应大于0", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return -1;
+    }
+    if(2*MAX_CITYLENGTH>Check_MAX_LENGTH)
+    {
+        QMessageBox::information(nullptr, "警告", "车辆无法往返最远配送点，车辆最大行驶里程应大于"+QString::number(2*MAX_CITYLENGTH), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return -1;
+    }
+    if(MAX_CITYWEIGHT>Check_MAX_WEIGHT)
+    {
+        QMessageBox::information(nullptr, "警告", "车辆无法达到载重要求，车辆最大载重应大于"+QString::number(MAX_CITYWEIGHT), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return -1;
+    }
+    return 0;
+}
+
 void MainWindow::on_pushButton_NewData_clicked()
 {
     CITY_COUNT=ui->spinBox_ClientNum->text().toInt();
@@ -211,28 +249,13 @@ void MainWindow::on_pushButton_NewData_clicked()
 void MainWindow::on_pushButton_Search_clicked()
 {
     clock_t  time_kp = clock();
+    if(CarCheck()==-1)
+        return;
+
     MultiCarInit();
-    qDebug()<<"MAX_CITYWEIGHT:"<<MAX_CITYWEIGHT<<"CAR_WEIGHT"<<MAX_WEIGHT;
-    if(CAR_COUNT==0)
-    {
-        QMessageBox::information(nullptr, "警告", "车辆数目应大于0", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        return;
-    }
-    if(2*MAX_CITYLENGTH>MAX_LENGTH)
-    {
-        QMessageBox::information(nullptr, "警告", "车辆无法往返最远配送点，车辆最大行驶里程应大于"+QString::number(2*MAX_CITYLENGTH), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        return;
-    }
-    if(MAX_CITYWEIGHT>MAX_WEIGHT)
-    {
-        qDebug()<<"MAX_CITYWEIGHT:"<<MAX_CITYWEIGHT<<"CAR_WEIGHT"<<MAX_WEIGHT;
-        QMessageBox::information(nullptr, "警告", "车辆无法达到载重要求，车辆最大载重应大于"+QString::number(MAX_CITYWEIGHT), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        return;
-    }
     ANT_COUNT=ui->spinBox_antNum->text().toInt();
-//    qDebug()<<"Ant Count: "<<ui->spinBox_antNum->text().toInt();
     IT_COUNT=ui->spinBox_maxGeneration->text().toInt();
-//    qDebug()<<"IT_COUNT: "<<ui->spinBox_maxGeneration->text().toInt();
+
 
     //qDebug()<<"点击搜索按钮";
     ctst->GetCarData();

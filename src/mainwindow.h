@@ -22,6 +22,7 @@ public:
     void DrawTab();
     void SetTableStyle();
     void SetPosTable();
+    int CarCheck();
     void MultiCarInit();
     ~MainWindow();
 
